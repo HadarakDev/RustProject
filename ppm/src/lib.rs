@@ -43,7 +43,7 @@ impl Pixel {
     }
 
     fn basic_gray_scale(&mut self){
-        let gray = ((self.r as f32 + self.g as f32 + self.b as f32) / 3.0) as u8 ;
+        let gray = self.r / 3 + self.g / 3 + self.b / 3;
         
         self.r = gray;
         self.g = gray;
@@ -71,7 +71,7 @@ mod tests {
 
     #[test]
     fn test_create_pixel() {
-        let p = Pixel{r:0, g:0, b:0};
+        let p = Pixel::new(0, 0, 0);
 
         assert_eq!(p.red(), 0);
         assert_eq!(p.green(), 0);
@@ -80,7 +80,7 @@ mod tests {
 
     #[test]
     fn test_invert_pixel() {
-        let mut p = Pixel{r:0, g:0, b:0};
+        let mut p = Pixel::new(0, 0, 0);
 
         p.invert();
         assert_eq!(p.red(), 255);
@@ -90,15 +90,15 @@ mod tests {
     
     #[test]
     fn test_display_pixel() {
-        let mut p = Pixel{r:0, g:0, b:0};
+        let p = Pixel::new(0, 0, 0);
 
         assert_eq!(format!("{}", p), "r = 0, g = 0, b = 0"); 
     }
 
     #[test]
     fn test_eq_pixel() {
-        let mut p1 = Pixel{r:0, g:0, b:0};
-        let mut p2 = Pixel{r:0, g:0, b:0};
+        let p1 = Pixel::new(0, 0, 0);
+        let p2 = Pixel::new(0, 0, 0);
 
         assert!(p1 == p2);
     }
@@ -106,7 +106,7 @@ mod tests {
     
     #[test]
     fn test_gray_true() {
-        let mut p1 = Pixel{r:255, g:0, b:167};
+        let mut p1 = Pixel::new(255, 0, 167);
         
         p1.true_gray_scale();
         assert_eq!(p1.red(), 94);
@@ -116,7 +116,7 @@ mod tests {
 
     #[test]
     fn test_gray_basic() {
-        let mut p1 = Pixel{r:255, g:0, b:167};
+        let mut p1 = Pixel::new(255, 0, 167);
         
         p1.basic_gray_scale();
         assert_eq!(p1.red(), 140);

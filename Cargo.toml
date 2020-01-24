@@ -1,8 +1,0 @@
-[package]
-name = "ppm"
-version = "0.1.0"
-authors = ["TAVERNIER Antoine (Uranium2) <tavenier.antoine@hotmail.fr>"]
-edition = "2018"
-
-[dependencies]
-

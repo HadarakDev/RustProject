@@ -7,3 +7,4 @@ Portable Pixel Map Project written in Rust
 - Antoine Tavernier
 - Matthieu Allexandre
 - Nicolas ROCHE
+- Florian Bergeron

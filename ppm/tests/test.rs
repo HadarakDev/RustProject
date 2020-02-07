@@ -1,5 +1,5 @@
 // use ppm;
-
+use std::path::Path;
 extern crate ppm;
 
 #[test]
@@ -55,4 +55,11 @@ fn test_gray_basic() {
     assert_eq!(p1.red(), 140);
     assert_eq!(p1.green(), 140);
     assert_eq!(p1.blue(), 140);
+}
+
+#[test]
+fn test_open_image() {
+    let path = Path::new("img.ppm");
+    let img = ppm::Image::new_with_file(path);
+
 }

@@ -2,8 +2,9 @@ use std::fmt;
 use std::path::Path;
 use std::fs::File;
 use std::io::prelude::*;
-use std::ptr;
 use std::mem;
+use std::io::BufWriter;
+use std::io::BufReader;
 
 
 #[derive(Clone, Copy)]
@@ -77,9 +78,18 @@ pub struct Image {
     width: usize,
 }
 
-use std::io::{self, prelude::*, BufReader};
+
 
 impl Image {
+
+    pub fn height(&self) -> usize {
+        self.height
+    }
+
+    pub fn width(&self) -> usize {
+        self.width
+    }
+
     pub fn new_with_file(filename: &Path) -> Image {
         let f = File::open(filename).expect("Unable to open");
         let reader = BufReader::new(f);
@@ -90,15 +100,15 @@ impl Image {
         let mut buffer = vec![Pixel::new(0, 0, 0); 0 as usize];
         for line in reader.lines() {
             if let Ok(l) = line {
-                if i == 2
+                if i == 1
                 {
-                    let positions:Vec<&str> = l.split(" ").collect();
+                    let positions:Vec<&str> = l.split_whitespace().collect();
                     h = positions[1].parse::<usize>().unwrap();
                     w = positions[0].parse::<usize>().unwrap();
                     let size = h * w;
                     buffer = vec![Pixel::new(0, 0, 0); size as usize];
                 }
-                if i > 3
+                if i > 2
                 {
                     let pixels:Vec<&str> = l.split_whitespace().collect();
                     
@@ -114,28 +124,63 @@ impl Image {
             }
         }
 
-        for pixel in &buffer
-        {
-            println!("{}", pixel);
-        }
         Image { pixels: buffer, height: h, width: w}
+
 
     }
 
-}
     
-// impl Image {
-//     fn new_with_file(filename: &Path) -> Image {
-//         let f = File::open("img.ppm");
-//         let reader  = BufReader::new(f);
+    pub fn save_to_ppm(image: &Image, filename: &Path){
+        let file = File::create(filename).unwrap();
+        let mut writer = BufWriter::new(&file);
 
-//         let mut w = 0;
-//         let mut buffer = vec![0; 0 as usize];
-//         for line in reader.lines() {
-//             i += 1;
+        write!(&mut writer, "P3\n").expect("Error");
+        write!(&mut writer, "{} {}\n", image.width(), image.height()).expect("Error");
+        write!(&mut writer, "255\n").expect("Error");
+        let mut i = 0;
+        for y in 0..image.height() - 1
+        {
+            for x in 0..image.width() - 1
+            {
+                if x != image.width() - 1
+                {
+                    write!(&mut writer, "{} {} {} ", image.pixels[i].red(), image.pixels[i].green(), image.pixels[i].blue()).expect("Error"); 
+                }
+                else
+                {
+                    write!(&mut writer, "{} {} {}", image.pixels[i].red(), image.pixels[i].green(), image.pixels[i].blue()).expect("Error");
+                }
+                i += 1;
+            }
+            if y != image.height() - 1
+            {
+                write!(&mut writer, "\n").expect("Error");
+            }
+        }
+    }
+}
 
-
+// impl fmt::Display for Image {
+//     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        
+//         for pixel in self.pixels
+//         {
+//             write!(f, "{}", pixel)
 //         }
-//         // Image { pixels: buffer, height: h, width: w}
 //     }
 // }
+
+impl fmt::Display for Image {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let mut comma_separated = String::new();
+
+        for num in &self.pixels {
+            comma_separated.push_str(&num.to_string());
+            comma_separated.push_str(" ");
+        }
+
+        write!(f, "{}", comma_separated)
+    }
+}
+
+

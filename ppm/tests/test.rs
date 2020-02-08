@@ -60,6 +60,27 @@ fn test_gray_basic() {
 #[test]
 fn test_open_image() {
     let path = Path::new("img.ppm");
-    let img = ppm::Image::new_with_file(path);
+    ppm::Image::new_with_file(path);
+}
 
+#[test]
+fn test_save_image() {
+    let path = Path::new("img.ppm");
+    let path2 = Path::new("img2.ppm");
+    let _img = ppm::Image::new_with_file(path);
+    ppm::Image::save_to_ppm(&_img, path2);
+
+}
+
+#[test]
+fn test_load_image_saved() {
+    let path = Path::new("img2.ppm");
+    ppm::Image::new_with_file(path);
+}
+
+#[test]
+fn test_display_Image() {
+    let path = Path::new("img2.ppm");
+    let img = ppm::Image::new_with_file(path);
+    println!("{}", img); 
 }

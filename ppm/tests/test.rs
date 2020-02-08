@@ -68,7 +68,7 @@ fn test_save_image() {
     let path = Path::new("img.ppm");
     let path2 = Path::new("img2.ppm");
     let _img = ppm::Image::new_with_file(path);
-    ppm::Image::save_to_ppm(&_img, path2);
+    _img.save_to_ppm(path2);
 
 }
 
@@ -82,5 +82,34 @@ fn test_load_image_saved() {
 fn test_display_Image() {
     let path = Path::new("img2.ppm");
     let img = ppm::Image::new_with_file(path);
+    println!("{}", img); 
+}
+
+#[test]
+fn  test_true_convert_to_gray()
+{
+    let path = Path::new("img2.ppm");
+    let mut img = ppm::Image::new_with_file(path);
+    img.convert_image_to_gray(0);
+    println!("{}", img); 
+}
+
+#[test]
+fn  test_basic_convert_to_gray()
+{
+    let path = Path::new("img.ppm");
+    let mut img = ppm::Image::new_with_file(path);
+    img.convert_image_to_gray(1);
+    println!("{}", img); 
+    let path_gray = Path::new("imggray.ppm");
+    img.save_to_ppm(path_gray)
+}
+
+#[test]
+fn  test_invert_image()
+{
+    let path = Path::new("img2.ppm");
+    let mut img = ppm::Image::new_with_file(path);
+    img.invert();
     println!("{}", img); 
 }

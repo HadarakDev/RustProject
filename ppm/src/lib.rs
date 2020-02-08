@@ -7,6 +7,7 @@ use std::io::BufWriter;
 use std::io::BufReader;
 
 
+/// Representation of a Pixel: RGB
 #[derive(Clone, Copy)]
 pub struct Pixel{
     r: u8,
@@ -130,45 +131,60 @@ impl Image {
     }
 
     
-    pub fn save_to_ppm(image: &Image, filename: &Path){
+    pub fn save_to_ppm(&self, filename: &Path){
         let file = File::create(filename).unwrap();
         let mut writer = BufWriter::new(&file);
 
         write!(&mut writer, "P3\n").expect("Error");
-        write!(&mut writer, "{} {}\n", image.width(), image.height()).expect("Error");
+        write!(&mut writer, "{} {}\n", self.width(), self.height()).expect("Error");
         write!(&mut writer, "255\n").expect("Error");
         let mut i = 0;
-        for y in 0..image.height() - 1
+        for y in 0..self.height() - 1
         {
-            for x in 0..image.width() - 1
+            for x in 0..self.width() - 1
             {
-                if x != image.width() - 1
+                if x != self.width() - 1
                 {
-                    write!(&mut writer, "{} {} {} ", image.pixels[i].red(), image.pixels[i].green(), image.pixels[i].blue()).expect("Error"); 
+                    write!(&mut writer, "{} {} {} ", self.pixels[i].red(), self.pixels[i].green(), self.pixels[i].blue()).expect("Error"); 
                 }
                 else
                 {
-                    write!(&mut writer, "{} {} {}", image.pixels[i].red(), image.pixels[i].green(), image.pixels[i].blue()).expect("Error");
+                    write!(&mut writer, "{} {} {}", self.pixels[i].red(), self.pixels[i].green(), self.pixels[i].blue()).expect("Error");
                 }
                 i += 1;
             }
-            if y != image.height() - 1
+            if y != self.height() - 1
             {
                 write!(&mut writer, "\n").expect("Error");
             }
         }
     }
-}
 
-// impl fmt::Display for Image {
-//     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        
-//         for pixel in self.pixels
-//         {
-//             write!(f, "{}", pixel)
-//         }
-//     }
-// }
+    pub fn convert_image_to_gray(&mut self, basic_gray: u8){
+        let size = self.height() * self.width();
+        for i in 0..size - 1
+        {
+            if basic_gray == 1
+            {
+                Pixel::basic_gray_scale(&mut self.pixels[i]);
+            }
+            else
+            {
+                Pixel::true_gray_scale(&mut self.pixels[i]);
+            }
+        }
+    }
+
+    pub fn invert(&mut self){
+        let size = self.height() * self.width();
+        for i in 0..size - 1
+        {
+            Pixel::invert(&mut self.pixels[i]);
+        }
+    }
+
+
+}
 
 impl fmt::Display for Image {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

@@ -208,6 +208,21 @@ impl Image {
             println!("{}", "");
         }
     }
+
+    /// Rotates an image 180
+    pub fn rotate_180(&mut self){
+        let size = self.height() * self.width();
+        let mut buffer = vec![Pixel::new(0, 0, 0); size as usize];
+        let mut i = size;
+
+        for p in &self.pixels{
+            i = i - 1;
+            buffer[i] = *p;
+        }
+
+        self.pixels = buffer;
+    }
+
 }
 
 impl fmt::Display for Image {
@@ -222,5 +237,8 @@ impl fmt::Display for Image {
         write!(f, "{}", comma_separated)
     }
 }
+
+
+
 
 

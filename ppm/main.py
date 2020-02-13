@@ -1,10 +1,8 @@
 from cffi import FFI
 
 ffi = FFI()
-ffi.cdef("""
-    int double(int);
-""")
+ffi.cdef('int double(int);')
 
-C = ffi.dlopen("../ffi/target/debug/ppm.dll")
+C = ffi.dlopen("./target/debug/libppm.so")
 
 print(C.double(9))

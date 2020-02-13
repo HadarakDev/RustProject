@@ -6,6 +6,10 @@ use std::mem;
 use std::io::BufWriter;
 use std::io::BufReader;
 
+#[no_mangle]
+pub extern "C" fn double(x: i32) -> i32 {
+    x * 2
+}
 
 /// Representation of a Pixel: RGB
 #[derive(Clone, Copy)]

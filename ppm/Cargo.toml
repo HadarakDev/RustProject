@@ -1,8 +1,11 @@
 [package]
 name = "ppm"
 version = "0.1.0"
-authors = ["nicolas ROCHE <nico_roche@hotmail.fr>", "Matthieu ALLEXANDRE <matthieu.allexandre@gmail.com>", "Antoine TAVERNIER <tavernier.antoine@hotmail.fr>"]
+authors = ["nicolas ROCHE <nico_roche@hotmail.fr>", "Matthieu ALLEXANDRE <matthieu.allexandre@gmail.com>", "Antoine TAVERNIER <tavernier.antoine@hotmail.fr>", "Florian BERGERON <bergeron.florian@gmail.com"]
 edition = "2018"
 
+[lib]
+name = "ppm"
+crate-type = ["dylib"]
 
 [dependencies]

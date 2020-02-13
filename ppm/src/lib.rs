@@ -16,6 +16,7 @@ pub struct Pixel{
 }
 
 impl Pixel {
+    /// Create a new Pixel
     pub fn new(r: u8, g: u8, b: u8) -> Pixel {
         Pixel {
             r: r,
@@ -24,24 +25,28 @@ impl Pixel {
         }
     }
 
+    /// Get red Value of Pixel 
     pub fn red(&self) -> u8 {
         self.r
     }
 
+    /// Get green Value of Pixel 
     pub fn green(&self) -> u8 {
         self.g
     }
 
+    /// Get blue Value of Pixel 
     pub fn blue(&self) -> u8 {
         self.b
     }
-
+    /// Invert Pixel color
     pub fn invert(&mut self) {
         self.r = 0xFF - self.r;
         self.g = 0xFF - self.g;
         self.b = 0xFF - self.b;
     }
 
+    /// Convert a pixel into Gray Scale using an improved method (30 % of red, 59% of blue, 11% of green)
     pub fn true_gray_scale(&mut self) {
         let gray = (self.r as f32 * 0.3 + self.g as f32 * 0.59 + self.b as f32 * 0.11) as u8;
 
@@ -50,6 +55,7 @@ impl Pixel {
         self.b = gray;
     }
 
+    /// Convert a pixel into Gray Scale using basic ratio
     pub fn basic_gray_scale(&mut self){
         let gray = self.r / 3 + self.g / 3 + self.b / 3;
         
@@ -73,6 +79,7 @@ impl PartialEq for Pixel {
     }
 }
 
+/// Representation of a Image
 pub struct Image {
     pixels: Vec<Pixel>,
     height: usize,
@@ -83,14 +90,15 @@ pub struct Image {
 
 impl Image {
 
+    /// Get height of Image
     pub fn height(&self) -> usize {
         self.height
     }
-
+    /// Get width of Image
     pub fn width(&self) -> usize {
         self.width
     }
-
+    /// Load Image with ppm file
     pub fn new_with_file(filename: &Path) -> Image {
         let f = File::open(filename).expect("Unable to open");
         let reader = BufReader::new(f);
@@ -130,7 +138,7 @@ impl Image {
 
     }
 
-    
+    /// Save Image to  ppm format with given filename
     pub fn save_to_ppm(&self, filename: &Path){
         let file = File::create(filename).unwrap();
         let mut writer = BufWriter::new(&file);
@@ -159,7 +167,8 @@ impl Image {
             }
         }
     }
-
+    
+    /// Convert Image into Gray Scale in Memory ( 9 to use basic method, 1 to use improved one)
     pub fn convert_image_to_gray(&mut self, basic_gray: u8){
         let size = self.height() * self.width();
         for i in 0..size - 1
@@ -175,6 +184,7 @@ impl Image {
         }
     }
 
+    /// Invert Image Color in Memory
     pub fn invert(&mut self){
         let size = self.height() * self.width();
         for i in 0..size - 1

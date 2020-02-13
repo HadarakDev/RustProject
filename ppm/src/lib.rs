@@ -1,3 +1,4 @@
+#![crate_type = "dylib"]
 use std::fmt;
 use std::path::Path;
 use std::fs::File;
@@ -15,9 +16,20 @@ pub struct Pixel{
     b: u8,
 }
 
+#[no_mangle]
+pub extern fn create_pixel(r: u8, g: u8, b: u8) -> Pixel {
+    Pixel::new(r, g, b)
+}
+
+#[no_mangle]
+pub extern fn invert_pixel(p: &mut Pixel) {
+    p.invert()
+}
+
 impl Pixel {
     /// Create a new Pixel
-    pub fn new(r: u8, g: u8, b: u8) -> Pixel {
+    #[no_mangle]
+    pub extern fn new(r: u8, g: u8, b: u8) -> Pixel {
         Pixel {
             r: r,
             g: g,

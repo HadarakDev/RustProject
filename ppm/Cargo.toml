@@ -4,5 +4,6 @@ version = "0.1.0"
 authors = ["nicolas ROCHE <nico_roche@hotmail.fr>", "Matthieu ALLEXANDRE <matthieu.allexandre@gmail.com>", "Antoine TAVERNIER <tavernier.antoine@hotmail.fr>"]
 edition = "2018"
 
-
-[dependencies]
+[lib]
+name = "ppm"
+crate-type = ["dylib"]

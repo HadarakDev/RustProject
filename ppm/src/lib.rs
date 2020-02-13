@@ -6,7 +6,10 @@ use std::io::prelude::*;
 use std::mem;
 use std::io::BufWriter;
 use std::io::BufReader;
-
+extern crate ansi_term;
+use ansi_term::Style;
+use ansi_term::Colour::RGB;
+use std::str;
 
 /// Representation of a Pixel: RGB
 #[derive(Clone, Copy)]
@@ -159,11 +162,11 @@ impl Image {
         write!(&mut writer, "{} {}\n", self.width(), self.height()).expect("Error");
         write!(&mut writer, "255\n").expect("Error");
         let mut i = 0;
-        for y in 0..self.height() - 1
+        for y in 0..self.height()
         {
-            for x in 0..self.width() - 1
+            for x in 0..self.width()
             {
-                if x != self.width() - 1
+                if x != self.width()
                 {
                     write!(&mut writer, "{} {} {} ", self.pixels[i].red(), self.pixels[i].green(), self.pixels[i].blue()).expect("Error"); 
                 }
@@ -173,7 +176,7 @@ impl Image {
                 }
                 i += 1;
             }
-            if y != self.height() - 1
+            if y != self.height()
             {
                 write!(&mut writer, "\n").expect("Error");
             }
@@ -205,6 +208,32 @@ impl Image {
         }
     }
 
+    pub fn display_image_in_terminal(&self) {
+        let mut i = 0;
+        for y in 0..self.height()
+        {
+            for x in 0..self.width()
+            {
+                print!("{}", RGB(self.pixels[i].red(), self.pixels[i].green(), self.pixels[i].blue()).paint("■"));
+                i = i + 1;
+            }
+            println!("{}", "");
+        }
+    }
+
+    /// Rotates an image 180
+    pub fn rotate_180(&mut self){
+        let size = self.height() * self.width();
+        let mut buffer = vec![Pixel::new(0, 0, 0); size as usize];
+        let mut i = size;
+
+        for p in &self.pixels{
+            i = i - 1;
+            buffer[i] = *p;
+        }
+
+        self.pixels = buffer;
+    }
 
 }
 
@@ -220,5 +249,8 @@ impl fmt::Display for Image {
         write!(f, "{}", comma_separated)
     }
 }
+
+
+
 
 

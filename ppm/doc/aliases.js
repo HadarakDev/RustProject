@@ -1,3 +1,3 @@
 var ALIASES = {};
-ALIASES["doc"] = {};
+ALIASES["docs"] = {};
 ALIASES["lib"] = {};

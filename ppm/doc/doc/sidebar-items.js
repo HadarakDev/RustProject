@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Image",""],["Pixel","Representation of a Pixel: RGB"]]});

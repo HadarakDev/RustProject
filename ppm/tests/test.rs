@@ -113,3 +113,13 @@ fn  test_invert_image()
     img.invert();
     println!("{}", img); 
 }
+
+#[test]
+fn  test_rotate_180()
+{
+    let path = Path::new("img2.ppm");
+    let mut img = ppm::Image::new_with_file(path);
+    img.display_image_in_terminal();
+    img.rotate_180();
+    img.display_image_in_terminal();
+}

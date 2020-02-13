@@ -210,6 +210,20 @@
 <span id="210">210</span>
 <span id="211">211</span>
 <span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
@@ -218,7 +232,10 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">BufWriter</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">BufReader</span>;
-
+<span class="comment">// extern crate ansi_term;</span>
+<span class="comment">// use ansi_term::Style;</span>
+<span class="comment">// use ansi_term::Colour::RGB;</span>
+<span class="comment">// use std::str;</span>
 
 <span class="doccomment">/// Representation of a Pixel: RGB</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
@@ -360,11 +377,11 @@
         <span class="macro">write</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="string">&quot;{} {}\n&quot;</span>, <span class="self">self</span>.<span class="ident">width</span>(), <span class="self">self</span>.<span class="ident">height</span>()).<span class="ident">expect</span>(<span class="string">&quot;Error&quot;</span>);
         <span class="macro">write</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="string">&quot;255\n&quot;</span>).<span class="ident">expect</span>(<span class="string">&quot;Error&quot;</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">for</span> <span class="ident">y</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">height</span>() <span class="op">-</span> <span class="number">1</span>
+        <span class="kw">for</span> <span class="ident">y</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">height</span>()
         {
-            <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">width</span>() <span class="op">-</span> <span class="number">1</span>
+            <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">width</span>()
             {
-                <span class="kw">if</span> <span class="ident">x</span> <span class="op">!</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">width</span>() <span class="op">-</span> <span class="number">1</span>
+                <span class="kw">if</span> <span class="ident">x</span> <span class="op">!</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">width</span>()
                 {
                     <span class="macro">write</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="string">&quot;{} {} {} &quot;</span>, <span class="self">self</span>.<span class="ident">pixels</span>[<span class="ident">i</span>].<span class="ident">red</span>(), <span class="self">self</span>.<span class="ident">pixels</span>[<span class="ident">i</span>].<span class="ident">green</span>(), <span class="self">self</span>.<span class="ident">pixels</span>[<span class="ident">i</span>].<span class="ident">blue</span>()).<span class="ident">expect</span>(<span class="string">&quot;Error&quot;</span>); 
                 }
@@ -374,7 +391,7 @@
                 }
                 <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             }
-            <span class="kw">if</span> <span class="ident">y</span> <span class="op">!</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">height</span>() <span class="op">-</span> <span class="number">1</span>
+            <span class="kw">if</span> <span class="ident">y</span> <span class="op">!</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">height</span>()
             {
                 <span class="macro">write</span><span class="macro">!</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">writer</span>, <span class="string">&quot;\n&quot;</span>).<span class="ident">expect</span>(<span class="string">&quot;Error&quot;</span>);
             }
@@ -406,7 +423,18 @@
         }
     }
 
-
+    <span class="comment">// pub fn display_image_in_terminal(&amp;self) {</span>
+    <span class="comment">//     let mut i = 0;</span>
+    <span class="comment">//     for y in 0..self.height()</span>
+    <span class="comment">//     {</span>
+    <span class="comment">//         for x in 0..self.width()</span>
+    <span class="comment">//         {</span>
+    <span class="comment">//             print!(&quot;{}&quot;, RGB(self.pixels[i].red(), self.pixels[i].green(), self.pixels[i].blue()).paint(&quot;■&quot;));</span>
+    <span class="comment">//             i = i + 1;</span>
+    <span class="comment">//         }</span>
+    <span class="comment">//         println!(&quot;{}&quot;, &quot;&quot;);</span>
+    <span class="comment">//     }</span>
+    <span class="comment">// }</span>
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Image</span> {

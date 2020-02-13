@@ -225,7 +225,6 @@ impl Image {
 
     pub fn rotate_90(&mut self)
     {
-        let size = self.height() * self.width();
 
         let new_height = self.width();
         let new_width = self.height();
@@ -233,9 +232,9 @@ impl Image {
 
         let mut n = 0;  
         let mut x:i8 = 0;
-        while x < new_width as i8
+        while x < self.width() as i8
         {
-            let mut tmp_y:i8 = (new_height - 1) as i8;
+            let mut tmp_y:i8 = (self.height() - 1) as i8;
             let mut i:usize = (tmp_y * 3 + x * 1) as usize;
             while tmp_y >= 0
             {
@@ -247,8 +246,15 @@ impl Image {
             x = x + 1
         }
         mem::replace(&mut self.pixels, buffer);
+        mem::replace(&mut self.width, 4);
+        mem::replace(&mut self.height, 3);
     }
 
+    pub fn rotate_270(&mut self)
+    {
+        self.rotate_180();
+        self.rotate_90();
+    }
 }
 
 

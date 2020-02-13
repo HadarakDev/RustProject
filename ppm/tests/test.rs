@@ -133,3 +133,13 @@ fn  test_rotate_90()
     img.rotate_90();
     img.display_image_in_terminal();
 }
+
+#[test]
+fn  test_rotate_270()
+{
+    let path = Path::new("img3.ppm");
+    let mut img = ppm::Image::new_with_file(path);
+    img.display_image_in_terminal();
+    img.rotate_270();
+    img.display_image_in_terminal();
+}

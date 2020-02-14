@@ -23,8 +23,7 @@ pub struct Pixel{
 
 impl Pixel {
     /// Create a new Pixel
-    #[no_mangle]
-    pub extern fn new(r: u8, g: u8, b: u8) -> Pixel {
+    pub fn new(r: u8, g: u8, b: u8) -> Pixel {
         Pixel {
             r: r,
             g: g,

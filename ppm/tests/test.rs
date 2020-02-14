@@ -143,3 +143,23 @@ fn  test_rotate_270()
     img.rotate_270();
     img.display_image_in_terminal();
 }
+
+#[test]
+fn  test_flip_horizontal()
+{
+    let path = Path::new("img2.ppm");
+    let mut img = ppm::Image::new_with_file(path);
+    img.display_image_in_terminal();
+    img.flip_horizontal();
+    img.display_image_in_terminal();
+}
+
+#[test]
+fn  test_flip_vertical()
+{
+    let path = Path::new("img2.ppm");
+    let mut img = ppm::Image::new_with_file(path);
+    img.display_image_in_terminal();
+    img.flip_vertical();
+    img.display_image_in_terminal();
+}

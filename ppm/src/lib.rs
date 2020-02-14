@@ -209,6 +209,40 @@ impl Image {
         }
     }
 
+    pub fn flip_horizontal(&mut self){
+        let size = self.height() * self.width();
+        let height = self.height();
+        let width = self.width();
+        let mut buffer = vec![Pixel::new(0, 0, 0); size as usize];
+        let mut k = 0;
+
+        for i in (0..height).rev(){
+            for j in (0..width){
+                buffer[k] = self.pixels[i * width + j];
+                k = k + 1; 
+            }
+        }
+
+        self.pixels = buffer;
+    }
+
+    pub fn flip_vertical(&mut self){
+        let size = self.height() * self.width();
+        let height = self.height();
+        let width = self.width();
+        let mut buffer = vec![Pixel::new(0, 0, 0); size as usize];
+        let mut k = 0;
+
+        for i in (0..height){
+            for j in (0..width).rev(){
+                buffer[k] = self.pixels[i * height + j];
+                k = k + 1; 
+            }
+        }
+
+        self.pixels = buffer;
+    }
+
     /// Rotates an image 180
     pub fn rotate_180(&mut self){
         let size = self.height() * self.width();

@@ -1,7 +1,7 @@
 // use ppm;
 use std::path::Path;
 extern crate ppm;
-use ppm::load_png_as_ppm;
+
 
 #[test]
 fn test_create_pixel() {
@@ -170,6 +170,144 @@ fn  test_flip_vertical()
 fn  test_convert_png()
 {
     let path = Path::new("images/resize/img3.png");
-    let mut img = load_png_as_ppm(path);
+    let img = ppm::load_png_as_ppm(path);
     img.display_image_in_terminal();
 }
+
+
+
+// Test ppm
+
+// load ppm
+#[test]   
+fn  test_presentation_load_ppm()
+{
+    let path = Path::new("img3.ppm");
+    let img = ppm::Image::new_with_file(path);
+    img.display_image_in_terminal();
+}
+
+// rotate ppm 90
+
+#[test]   
+fn  test_presentation_rotate_90_ppm()
+{
+    let path = Path::new("img3.ppm");
+    let mut img = ppm::Image::new_with_file(path);
+    img.display_image_in_terminal();
+    img.rotate_90();
+    img.display_image_in_terminal();
+}
+// rotate ppm 180 
+#[test]
+fn  test_presentation_rotate_180_ppm()
+{
+    let path = Path::new("img3.ppm");
+    let mut img = ppm::Image::new_with_file(path);
+    img.display_image_in_terminal();
+    img.rotate_180();
+    img.display_image_in_terminal();
+}
+
+// rotate ppm 270 
+
+#[test]
+fn  test_presentation_rotate_270_ppm()
+{
+    let path = Path::new("img3.ppm");
+    let mut img = ppm::Image::new_with_file(path);
+    img.display_image_in_terminal();
+    img.rotate_270();
+    img.display_image_in_terminal();
+}
+
+// gray scale ppm
+#[test]
+fn  test_presentation_gray_scale_ppm()
+{
+    let path = Path::new("img3.ppm");
+    let mut img = ppm::Image::new_with_file(path);
+    img.display_image_in_terminal();
+    img.convert_image_to_gray(1);
+    img.display_image_in_terminal();
+}
+
+#[test]
+fn test_presentation_save_image() {
+    let path = Path::new("img.ppm");
+    let path2 = Path::new("img_presentation.ppm");
+    let _img = ppm::Image::new_with_file(path);
+    _img.save_to_ppm(path2);
+}
+
+// Test png
+#[test]   
+fn  test_presentation_load_png()
+{
+    let path = Path::new("images/resize/img3.png");
+    let img = ppm::load_png_as_ppm(path);
+    img.display_image_in_terminal();
+}
+
+#[test]   
+fn  test_presentation_rotate_90_png()
+{
+    let path = Path::new("images/resize/img3.png");
+    let mut img = ppm::load_png_as_ppm(path);
+    img.display_image_in_terminal();
+    img.rotate_90();
+    img.display_image_in_terminal();
+}
+
+
+#[test]   
+fn  test_presentation_rotate_180_png()
+{
+    let path = Path::new("images/resize/img3.png");
+    let mut img = ppm::load_png_as_ppm(path);
+    img.display_image_in_terminal();
+    img.rotate_180();
+    img.display_image_in_terminal();
+}
+
+#[test]   
+fn  test_presentation_gray_png()
+{
+    let path = Path::new("images/resize/img3.png");
+    let mut img = ppm::load_png_as_ppm(path);
+    img.convert_image_to_gray(1);
+    img.display_image_in_terminal();
+}
+
+#[test]   
+fn  test_presentation_flip_h_png()
+{
+    let path = Path::new("images/resize/img3.png");
+    let mut img = ppm::load_png_as_ppm(path);
+    img.flip_horizontal();
+    img.display_image_in_terminal();
+}
+
+#[test]   
+fn  test_presentation_flip_v_png()
+{
+    let path = Path::new("images/resize/img3.png");
+    let mut img = ppm::load_png_as_ppm(path);
+    img.flip_vertical();
+    img.display_image_in_terminal();
+}
+
+#[test]   
+fn  test_presentation_invert_png()
+{
+    let path = Path::new("images/resize/img3.png");
+    let mut img = ppm::load_png_as_ppm(path);
+    img.invert();
+    img.display_image_in_terminal();
+}
+
+
+
+
+
+

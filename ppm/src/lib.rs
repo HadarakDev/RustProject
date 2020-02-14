@@ -1,3 +1,5 @@
+extern crate image;
+
 use std::fmt;
 use std::path::Path;
 use std::fs::File;
@@ -10,8 +12,6 @@ use std::str;
 use ansi_rgb::{ Foreground, Background };
 use rgb::RGB8;
 
-
-extern crate image;
 
 /// Representation of a Pixel: RGB
 #[derive(Clone, Copy)]
@@ -177,7 +177,7 @@ impl Image {
     /// Convert Image into Gray Scale in Memory ( 9 to use basic method, 1 to use improved one)
     pub fn convert_image_to_gray(&mut self, basic_gray: u8){
         let size = self.height() * self.width();
-        for i in 0..size - 1
+        for i in 0..size
         {
             if basic_gray == 1
             {

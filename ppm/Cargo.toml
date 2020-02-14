@@ -6,3 +6,6 @@ edition = "2018"
 
 
 [dependencies]
+image = "*"
+ansi_rgb = "*"
+rgb = "0.8"

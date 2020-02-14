@@ -5,10 +5,14 @@ use std::io::prelude::*;
 use std::mem;
 use std::io::BufWriter;
 use std::io::BufReader;
-extern crate ansi_term;
-use ansi_term::Style;
-use ansi_term::Colour::RGB;
+
 use std::str;
+use ansi_rgb::{ Foreground, Background };
+use rgb::RGB8;
+
+
+extern crate image;
+use image::DynamicImage;
 
 /// Representation of a Pixel: RGB
 #[derive(Clone, Copy)]
@@ -202,7 +206,9 @@ impl Image {
         {
             for x in 0..self.width()
             {
-                print!("{}", RGB(self.pixels[i].red(), self.pixels[i].green(), self.pixels[i].blue()).paint("■"));
+                let fg = RGB8::new(self.pixels[i].red(), self.pixels[i].green(), self.pixels[i].blue());
+                let bg = RGB8::new(self.pixels[i].red(), self.pixels[i].green(), self.pixels[i].blue());
+                print!("{}", " ".fg(fg).bg(bg));
                 i = i + 1;
             }
             println!("{}", "");
@@ -280,8 +286,8 @@ impl Image {
             x = x + 1
         }
         mem::replace(&mut self.pixels, buffer);
-        mem::replace(&mut self.width, 4);
-        mem::replace(&mut self.height, 3);
+        mem::replace(&mut self.width, new_width);
+        mem::replace(&mut self.height, new_height);
     }
 
     pub fn rotate_270(&mut self)
@@ -304,6 +310,20 @@ impl fmt::Display for Image {
 
         write!(f, "{}", comma_separated)
     }
+}
+
+pub fn load_png_as_ppm(filename: &Path) -> Image 
+{
+    let im = image::open(filename).unwrap().to_rgb();
+    let size = im.width() * im.height();
+    let mut buffer = vec![Pixel::new(0, 0, 0); size as usize];
+    let mut i = 0;
+    for pixel in im.pixels() {
+        mem::replace(&mut buffer[i], Pixel::new(pixel[0], pixel[1], pixel[2]));
+        i = i + 1;
+    }
+    Image { pixels: buffer, height: im.height() as usize, width: im.width() as usize}
+
 }
 
 

@@ -1,6 +1,7 @@
 // use ppm;
 use std::path::Path;
 extern crate ppm;
+use ppm::load_png_as_ppm;
 
 #[test]
 fn test_create_pixel() {
@@ -161,5 +162,12 @@ fn  test_flip_vertical()
     let mut img = ppm::Image::new_with_file(path);
     img.display_image_in_terminal();
     img.flip_vertical();
+}
+
+#[test]   
+fn  test_convert_png()
+{
+    let path = Path::new("images/resize/img3.png");
+    let mut img = load_png_as_ppm(path);
     img.display_image_in_terminal();
 }

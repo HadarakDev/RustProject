@@ -1,4 +1,3 @@
-#![crate_type = "dylib"]
 use std::fmt;
 use std::path::Path;
 use std::fs::File;
@@ -10,23 +9,15 @@ extern crate ansi_term;
 use ansi_term::Style;
 use ansi_term::Colour::RGB;
 use std::str;
+extern crate libc;
 
 /// Representation of a Pixel: RGB
+#[repr(C)]
 #[derive(Clone, Copy)]
 pub struct Pixel{
     r: u8,
     g: u8,
     b: u8,
-}
-
-#[no_mangle]
-pub extern fn create_pixel(r: u8, g: u8, b: u8) -> Pixel {
-    Pixel::new(r, g, b)
-}
-
-#[no_mangle]
-pub extern fn invert_pixel(p: &mut Pixel) {
-    p.invert()
 }
 
 impl Pixel {
@@ -283,8 +274,3 @@ impl fmt::Display for Image {
         write!(f, "{}", comma_separated)
     }
 }
-
-
-
-
-

@@ -162,6 +162,8 @@ fn  test_flip_vertical()
     let mut img = ppm::Image::new_with_file(path);
     img.display_image_in_terminal();
     img.flip_vertical();
+    img.display_image_in_terminal();
+    
 }
 
 #[test]   

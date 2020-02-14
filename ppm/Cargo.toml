@@ -10,5 +10,7 @@ crate-type = ["dylib"]
 path = "src/wrapper.rs"
 
 [dependencies]
-ansi_term = "0.12.1"
+image = "*"
+ansi_rgb = "*"
+rgb = "0.8"
 libc = "0.2.66"

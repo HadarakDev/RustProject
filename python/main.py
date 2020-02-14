@@ -17,7 +17,7 @@ print("\nTo Gray " + str(p))
 print(pixel_to_gray(p))
 
 
-img = open_image("/home/antoine/ESGI/test/RustProject/ppm/img.ppm")
+img = open_image("../ppm/img.ppm")
 print(type(img))
 
 #display_image_in_terminal(img)

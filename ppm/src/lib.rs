@@ -45,6 +45,7 @@ impl Pixel {
     pub fn blue(&self) -> u8 {
         self.b
     }
+
     /// Invert Pixel color
     pub fn invert(&mut self) {
         self.r = 0xFF - self.r;
@@ -69,17 +70,17 @@ impl Pixel {
         self.g = gray;
         self.b = gray;
     }
-
-
 }
 
 impl fmt::Display for Pixel {
+    /// Print RGD values
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
        write!(f, "r = {}, g = {}, b = {}", self.r, self.g, self.b)
     }
 }
 
 impl PartialEq for Pixel {
+    /// Compare pixel color
     fn eq(&self, other: &Self) -> bool {
         self.r == other.red() && self.g == other.green() && self.b == other.blue()
     }
@@ -91,7 +92,6 @@ pub struct Image {
     height: usize,
     width: usize,
 }
-
 
 
 impl Image {
@@ -140,11 +140,9 @@ impl Image {
         }
 
         Image { pixels: buffer, height: h, width: w}
-
-
     }
 
-    /// Save Image to  ppm format with given filename
+    /// Save Image to ppm format with given filename
     pub fn save_to_ppm(&self, filename: &Path){
         let file = File::create(filename).unwrap();
         let mut writer = BufWriter::new(&file);
@@ -173,7 +171,7 @@ impl Image {
             }
         }
     }
-    
+
     /// Convert Image into Gray Scale in Memory ( 9 to use basic method, 1 to use improved one)
     pub fn convert_image_to_gray(&mut self, basic_gray: u8){
         let size = self.height() * self.width();
@@ -199,6 +197,7 @@ impl Image {
         }
     }
 
+    /// Display image previously processed in terminal
     pub fn display_image_in_terminal(&self) {
         let mut i = 0;
         for _y in 0..self.height()
@@ -214,6 +213,7 @@ impl Image {
         }
     }
 
+    /// Flip image horizontaly
     pub fn flip_horizontal(&mut self){
         let size = self.height() * self.width();
         let height = self.height();
@@ -233,6 +233,7 @@ impl Image {
         self.pixels = buffer;
     }
 
+    /// Flip image verticaly
     pub fn flip_vertical(&mut self){
         let size = self.height() * self.width();
         let height = self.height();
@@ -251,7 +252,7 @@ impl Image {
         self.pixels = buffer;
     }
 
-    /// Rotates an image 180
+    /// Rotates an image to 180
     pub fn rotate_180(&mut self){
         let size = self.height() * self.width();
         let mut buffer = vec![Pixel::new(0, 0, 0); size as usize];
@@ -265,9 +266,9 @@ impl Image {
         self.pixels = buffer;
     }
 
+    /// Rotates an image to 90
     pub fn rotate_90(&mut self)
     {
-
         let new_height = self.width();
         let new_width = self.height();
         let mut buffer = vec![Pixel::new(0, 0, 0); new_height * new_width  as usize];
@@ -292,6 +293,7 @@ impl Image {
         mem::replace(&mut self.height, new_height);
     }
 
+    /// Rotates an image to 270 degree
     pub fn rotate_270(&mut self)
     {
         self.rotate_180();
@@ -300,8 +302,8 @@ impl Image {
 }
 
 
-
 impl fmt::Display for Image {
+    /// Format result with comma separator
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let mut comma_separated = String::new();
 
@@ -314,6 +316,7 @@ impl fmt::Display for Image {
     }
 }
 
+/// Load an image: Extension png to ppm
 pub fn load_png_as_ppm(filename: &Path) -> Image 
 {
     let im = image::open(filename).unwrap().to_rgb();
@@ -327,8 +330,3 @@ pub fn load_png_as_ppm(filename: &Path) -> Image
     Image { pixels: buffer, height: im.height() as usize, width: im.width() as usize}
 
 }
-
-
-
-
-

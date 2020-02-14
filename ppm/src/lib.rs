@@ -235,7 +235,41 @@ impl Image {
         self.pixels = buffer;
     }
 
+    pub fn rotate_90(&mut self)
+    {
+
+        let new_height = self.width();
+        let new_width = self.height();
+        let mut buffer = vec![Pixel::new(0, 0, 0); new_height * new_width  as usize];
+
+        let mut n = 0;  
+        let mut x:i8 = 0;
+        while x < self.width() as i8
+        {
+            let mut tmp_y:i8 = (self.height() - 1) as i8;
+            let mut i:usize = (tmp_y * 3 + x * 1) as usize;
+            while tmp_y >= 0
+            {
+                buffer[n] = self.pixels[i];
+                n = n + 1;
+                tmp_y = tmp_y - 1;
+                i = (tmp_y * 3 + x * 1) as usize;
+            } 
+            x = x + 1
+        }
+        mem::replace(&mut self.pixels, buffer);
+        mem::replace(&mut self.width, 4);
+        mem::replace(&mut self.height, 3);
+    }
+
+    pub fn rotate_270(&mut self)
+    {
+        self.rotate_180();
+        self.rotate_90();
+    }
 }
+
+
 
 impl fmt::Display for Image {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {

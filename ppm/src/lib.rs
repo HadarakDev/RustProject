@@ -12,7 +12,6 @@ use rgb::RGB8;
 
 
 extern crate image;
-use image::DynamicImage;
 
 /// Representation of a Pixel: RGB
 #[derive(Clone, Copy)]
@@ -203,9 +202,9 @@ impl Image {
 
     pub fn display_image_in_terminal(&self) {
         let mut i = 0;
-        for y in 0..self.height()
+        for _y in 0..self.height()
         {
-            for x in 0..self.width()
+            for _x in 0..self.width()
             {
                 let fg = RGB8::new(self.pixels[i].red(), self.pixels[i].green(), self.pixels[i].blue());
                 let bg = RGB8::new(self.pixels[i].red(), self.pixels[i].green(), self.pixels[i].blue());
@@ -223,8 +222,10 @@ impl Image {
         let mut buffer = vec![Pixel::new(0, 0, 0); size as usize];
         let mut k = 0;
 
-        for i in (0..height).rev(){
-            for j in (0..width){
+        for i in (0..height).rev()
+        {
+            for j in 0..width
+            {
                 buffer[k] = self.pixels[i * width + j];
                 k = k + 1; 
             }
@@ -240,7 +241,8 @@ impl Image {
         let mut buffer = vec![Pixel::new(0, 0, 0); size as usize];
         let mut k = 0;
 
-        for i in (0..height){
+        for i in 0..height
+        {
             for j in (0..width).rev(){
                 buffer[k] = self.pixels[i * height + j];
                 k = k + 1; 

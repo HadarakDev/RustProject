@@ -4,8 +4,13 @@ version = "0.1.0"
 authors = ["nicolas ROCHE <nico_roche@hotmail.fr>", "Matthieu ALLEXANDRE <matthieu.allexandre@gmail.com>", "Antoine TAVERNIER <tavernier.antoine@hotmail.fr>"]
 edition = "2018"
 
+[lib]
+name = "ppm"
+crate-type = ["dylib"]
+path = "src/wrapper.rs"
 
 [dependencies]
 image = "*"
 ansi_rgb = "*"
 rgb = "0.8"
+libc = "0.2.66"

@@ -12,7 +12,6 @@ use std::str;
 extern crate libc;
 
 /// Representation of a Pixel: RGB
-#[repr(C)]
 #[derive(Clone, Copy)]
 pub struct Pixel{
     r: u8,

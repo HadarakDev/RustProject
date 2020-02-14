@@ -15,3 +15,9 @@ print(pixel_inv(p))
 p = Pixel(10, 20, 30)
 print("\nTo Gray " + str(p))
 print(pixel_to_gray(p))
+
+
+img = open_image("/home/antoine/ESGI/test/RustProject/ppm/img.ppm")
+print(type(img))
+
+#display_image_in_terminal(img)
